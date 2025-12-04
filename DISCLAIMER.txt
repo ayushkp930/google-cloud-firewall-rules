@@ -1,0 +1,15 @@
+DISCLAIMER
+
+This repository is intended for EDUCATIONAL and DEFENSIVE SECURITY purposes only.
+
+- All Google Cloud firewall configurations and screenshots in this project come
+  from a controlled lab or training environment.
+- Do NOT copy these examples directly into production without review.
+- Do NOT use any of the techniques from this project to attack or disrupt
+  networks or systems that you do not own or have explicit permission to test.
+
+Unauthorized access or disruption of networks is illegal. The author of this
+repository is not responsible for any misuse of the information documented here.
+
+By using this project, you agree to follow all applicable laws, policies, and
+cloud provider terms of service.
