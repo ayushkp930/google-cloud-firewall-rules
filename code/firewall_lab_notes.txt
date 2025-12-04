@@ -1,0 +1,76 @@
+Google Cloud Firewall Lab – Notes
+=================================
+
+1. Objectives
+-------------
+- View existing VPC firewall rules in the project.
+- Create an allow rule for HTTP and SSH to a web server VM.
+- Confirm that the website is reachable from the internet.
+- Create a deny rule to block HTTP traffic.
+- Use Logs Explorer to check allowed and denied connections.
+
+2. Environment
+--------------
+- Platform: Google Cloud Platform (GCP)
+- Services: VPC, Compute Engine, Firewall rules, Logs Explorer
+- VM: Web server instance with external IP
+- Network: Custom or default VPC
+
+3. High-Level Steps
+-------------------
+
+Step 1 – Review Existing Firewall Rules
+- Open "VPC network" → "Firewall rules".
+- Observed default rules:
+  - default-allow-icmp
+  - default-allow-internal
+  - default-allow-rdp
+  - default-allow-ssh
+
+Step 2 – Create Allow Rule for HTTP + SSH
+- Created rule: `allow-http-ssh`
+  - Direction: Ingress
+  - Action: Allow
+  - Targets: Web server (by tag, e.g. `http-server`)
+  - Source IP ranges: 0.0.0.0/0 (lab environment)
+  - Protocols/ports:
+    - tcp:22
+    - tcp:80
+
+Step 3 – Test Connectivity
+- Used external IP of the VM in browser to confirm:
+  - SSH accessible (via Cloud Console or open port)
+  - HTTP web page served by the VM.
+
+Step 4 – Create Deny Rule for HTTP
+- Created rule: `deny-http`
+  - Direction: Ingress
+  - Action: Deny
+  - Priority: Higher priority than allow rule
+  - Targets: Same VM tag as before
+  - Source IP ranges: 0.0.0.0/0
+  - Protocols/ports:
+    - tcp:80
+
+- Re-tested the web page:
+  - HTTP now blocked.
+  - SSH still allowed (because port 22 not denied).
+
+Step 5 – Analyze Logs in Logs Explorer
+- Opened "Logging" → "Logs Explorer".
+- Selected resource type related to subnet/VPC.
+- Filtered logs for:
+  - firewall rule name
+  - connection.src_ip (my public IP)
+- Observed:
+  - ALLOWED entries for SSH
+  - DENIED entries for HTTP after deny rule applied.
+
+4. Key Learnings
+----------------
+- Firewall rule priority determines which rule wins (lower number = higher priority).
+- Deny rules can override allow rules if priority is higher.
+- Logs Explorer is critical to validate and troubleshoot firewall behavior.
+- Opening ports to 0.0.0.0/0 is okay in labs, but in production should be limited.
+
+End of file.
