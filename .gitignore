@@ -1,0 +1,24 @@
+# Logs and temporary files
+*.log
+*.tmp
+
+# Local configs / secrets (never commit)
+*.env
+*.secret
+*.backup
+
+# Data exports (if you save Logs Explorer / SCC JSON, CSV)
+*.csv
+*.json
+
+# Python / compiled / cache (future use)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.o
+*.out
+
+# Local-only folders (not for GitHub)
+private/
+notes-local/
